@@ -1,0 +1,21 @@
+{
+  "name": "Open IoT Hub",
+  "version": "0.0.1",
+  "description": "Most simply IoT data hub",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Uyama.coffee (Hiroshi Uyama)",
+  "license": "MIT License",
+  "dependencies": {
+    "connect-redis": "^4.0.4",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.9.10",
+    "redis": "^3.0.2"
+  }
+}

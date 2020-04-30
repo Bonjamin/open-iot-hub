@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <%- include('../_head') %>
+  <body>
+    
+    <%- include('../_header') %>
+
+    <div class="container">
+      <h1>User's menu</h1>
+      <hr>
+      <div class="list-group">
+        <a href="/info" class="list-group-item list-group-item-action">User informations</a>
+        <a href="/explorer" class="list-group-item list-group-item-action">Data explorer</a>
+        <a href="/map" class="list-group-item list-group-item-action">Data settings</a>
+        <a href="#" class="list-group-item list-group-item-action">API Document</a>
+      </div>
+      <hr>
+      <a class="btn btn-primary" role="button" href="/users/logout">Log out</a>
+    </div>
+
+    <%- include('../_footer') %>
+    
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <%- include('../_head') %>
+  <body>
+    
+    <%- include('../_header') %>
+
+    <div class="container">
+      <h1>User informations</h1>
+      <hr>
+      <p>
+        <div class="card">
+          <div class="card-header">
+            <h2>API parameters</h2>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Api key</h3>
+            <p class="card-text"><%= user.apiKey %></p>
+            <h3 class="card-title">Api secret</h3>
+            <p class="card-text"><%= user.apiSecret %></p>
+          </div>
+        </div>
+      </p>
+      <p>
+        <div class="card">
+          <div class="card-header">
+            <h2>Data import</h2>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Endpoint</h3>
+            <p class="card-text">POST https://<%= req.host %>/import</p>
+            <h3 class="card-title">How to auth</h3>
+            <p class="card-text">
+              <h4>Request header</h4>
+              <p>
+                <pre><code>
+x-api-key:<%= user.apiKey %>
+                  </code></pre>
+                </p>
+              </p>
+              <h4>or Query parameter</h4>
+              <p>
+                <pre><code>
+/import?apiKey=<%= user.apiKey %>
+              </code></pre>
+            </p>
+          </div>
+        </div>
+      </p>
+
+    </div>
+
+    <%- include('../_footer') %>
+    
+  </body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+  <%- include('../_head') %>
+  <body>
+    
+    <%- include('../_header') %>
+
+    <div class="container">
+      <h1>Data settings</h1>
+      <hr>
+      <p>
+        <div class="card">
+          <div class="card-header">
+            <h2>Device ID location</h2>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="/map">
+              <div class="form-group row">
+                <label for="inputdeviceIdLocation" class="col-2 col-form-label">{ "payload" : { "</label>
+                <div class="col-2">
+                  <input type="text" class="form-control" id="inputdeviceIdLocation" name="deviceIdLocation" value="<%= deviceIdLocation || '' %>" placeholder="deviceId">
+                </div>
+                <label for="inputdeviceIdLocation" class="col-2 col-form-label">" : ... } }</label>
+              </div>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+          </div>
+        </div>
+      </p>
+      <p>
+        <div class="card">
+          <div class="card-header">
+            <h2>Data mapping</h2>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="/map">
+              <div id="mappingFormBase" style="display: none;">
+                <div><p>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-title">Data location</div>
+                      <div class="form-group row">
+                        <label class="col-2 col-form-label">{ "payload" : { "</label>
+                        <div class="col-2">
+                          <input type="text" class="form-control" name="location[]" placeholder="">
+                        </div>
+                        <label class="col-2 col-form-label">" : ... } }</label>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-2 col-form-label">Start bytes</label>
+                        <div class="col-4 margin-bottom-1rem">
+                            <input type="text" class="form-control" name="start[]" placeholder="0">
+                        </div>
+
+                        <label class="col-2 col-form-label">Length</label>
+                        <div class="col-4 margin-bottom-1rem">
+                          <input type="text" class="form-control" name="length[]" placeholder="4">
+                        </div>
+
+                        <label class="col-2 col-form-label">Endian</label>
+                        <div class="col-4 btn-group btn-group-toggle margin-bottom-1rem" data-toggle="buttons">
+                          <label class="btn btn-outline-primary active">
+                            <input type="radio" class="form-little-endian" name="littleEndian[0]" value="1">Little
+                          </label>
+                          <label class="btn btn-outline-primary">
+                            <input type="radio" class="form-little-endian" name="littleEndian[0]" value="0">Big
+                          </label>
+                        </div>
+
+                        <label class="col-2 col-form-label">Signed</label>
+                        <div class="col-4 btn-group btn-group-toggle margin-bottom-1rem" data-toggle="buttons">
+                          <label class="btn btn-outline-primary active">
+                            <input type="radio" class="form-unsigned" name="unsigned[0]" value="0">Signed
+                          </label>
+                          <label class="btn btn-outline-primary">
+                            <input type="radio" class="form-unsigned" name="unsigned[0]" value="1">Unsigned
+                          </label>
+                        </div>
+
+                        <label class="col-2 col-form-label margin-bottom-1rem">Label</label>
+                        <div class="col-4">
+                          <input type="text" class="form-control" name="label[]" placeholder="value1">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </p></div>
+              </div>
+              <div id="mappingFormBottom"></div>
+              <div class="form-group">
+                <button type="button" id="addFormButton" class="btn btn-primary">Add mapping</button>
+              </div>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+          </div>
+        </div>
+      </p>
+    </div>
+
+    <script>
+      $(function() {
+        var maps = [
+          <% for(let i = 0; i < maps.length; i++) { const map = maps[i]; %>
+            {
+              userId: '<%- map.userId %>',
+              location: '<%- map.location %>',
+              start: <%- map.start %>,
+              length: <%- map.length %>,
+              littleEndian: <%- map.littleEndian ? 1 : 0 %>,
+              unsigned: <%- map.unsigned ? 1 : 0 %>,
+              label: '<%- map.label %>'
+            },
+          <% } %>
+        ];
+
+        var addForm = function(index, map) {
+          var formId = 'mappingForm' + index;
+          var form = $(mappingFormHtml).attr('id', formId);
+          form.find('input.form-little-endian').attr('name', 'littleEndian[' + index + ']');
+          form.find('input.form-unsigned').attr('name', 'unsigned[' + index + ']');
+
+          if (map) {
+            form.find('input[name="location[]"]').val(map.location);
+            form.find('input[name="start[]"]').val(map.start);
+            form.find('input[name="length[]"]').val(map.length);
+            if(map.littleEndian) {
+              form.find('input.form-little-endian').eq(1).attr('checked', false);
+              form.find('input.form-little-endian').eq(0).attr('checked', true);
+            } else {
+              form.find('input.form-little-endian').eq(0).attr('checked', false);
+              form.find('input.form-little-endian').eq(1).attr('checked', true);
+            }
+            
+            if(map.unsigned) {
+              form.find('input.form-unsigned').eq(0).attr('checked', false);
+              form.find('input.form-unsigned').eq(1).prop('checked', true);
+            } else {
+              form.find('input.form-unsigned').eq(1).attr('checked', false);
+              form.find('input.form-unsigned').eq(0).prop('checked', true);
+            }
+            form.find('input[name="label[]"]').val(map.label);
+          }
+          $('#mappingFormBottom').before(form);
+        }
+
+        var currentIndex = 0;
+        var mappingFormHtml = $('#mappingFormBase').html()
+        if (maps.length > 0) {
+          for (let i = 0; i < maps.length; i++) {
+            var map = maps[i];
+            currentIndex = i + 1;
+            addForm(currentIndex, map);
+          }
+        } else {
+          currentIndex = 1;
+          addForm(currentIndex);
+        }
+
+        $('#addFormButton').click(function() {
+          currentIndex++;
+          addForm(currentIndex);
+        });
+      });
+    </script>
+
+    <%- include('../_footer') %>
+    
+  </body>
+</html>

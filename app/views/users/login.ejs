@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <%- include('../_head') %>
+  <body>
+    
+    <%- include('../_header') %>
+
+    <div class="container">
+      <h1>Log in</h1>
+      <hr>
+      <form method="POST" action="/users/login">
+        <%- include('_form') %>
+      </form>
+    </div>
+
+    <%- include('../_footer') %>
+    
+  </body>
+</html>
