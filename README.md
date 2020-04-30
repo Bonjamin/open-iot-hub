@@ -3,7 +3,9 @@
 ## System requirements
 
 Node.js 10.x or later
+
 MongoDB 4.x
+
 Redis 5.x
 
 ## Demo site
