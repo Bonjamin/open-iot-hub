@@ -1,4 +1,4 @@
-# Open IoT Data Hub
+# Open IoT Hub
 
 ## System requirements
 
