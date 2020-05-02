@@ -1,5 +1,5 @@
 {
-  "name": "Open IoT Hub",
+  "name": "open-iot-hub",
   "version": "0.0.1",
   "description": "Most simply IoT data hub",
   "main": "app.js",
@@ -7,7 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Uyama.coffee (Hiroshi Uyama)",
-  "license": "MIT License",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bonjamin/open-iot-hub.git"
+  },
   "dependencies": {
     "connect-redis": "^4.0.4",
     "crypto": "^1.0.1",
