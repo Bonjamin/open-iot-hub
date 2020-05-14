@@ -29,11 +29,10 @@ Redis https://redis.io/download
 
 ### Checkout this repo.
 
-`
+```
 % git clone https://github.com/Bonjamin/open-iot-data-hub
-
 % cd open-iot-data-hub
-`
+```
 
 ### Setup node_modules.
 
