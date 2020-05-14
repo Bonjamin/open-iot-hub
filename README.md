@@ -31,6 +31,7 @@ Redis https://redis.io/download
 
 `
 % git clone https://github.com/Bonjamin/open-iot-data-hub
+
 % cd open-iot-data-hub
 `
 
